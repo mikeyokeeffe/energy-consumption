@@ -1,20 +1,51 @@
 {% extends 'base.html' %}
+
 {% block content %}
-<a class="btn btn-secondary btn-sm mb-3" href="{% url 'buildings:index' %}">Back to Buildings</a>
-<h1 class="text-center mb-3">{{ building.name }} </h1>
 
-{% if error_message %}
-<p class="alert alert-danger">
- <strong>{{ error_message }}</strong>   
-</p>
-{% endif %}
-
-<form>
-  {% csrf_token %}
-  {% for reading in meter.readings_set.all %}
-  <div class="form-check">
-    <p class="lead">{{ reading.consumption }}</p>
+  <div id="container">
+    <canvas id="meter_chart" data-url="{% url 'buildings:meter_chart' meter.id %}"></canvas>
   </div>
-  {% endfor %}
-</form>
+
+  <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
+  <script>
+
+    $(function () {
+
+      var $meterChart = $("#meter_chart");
+      $.ajax({
+        url: $meterChart.data("url"),
+        success: function (data) {
+
+          var ctx = $meterChart[0].getContext("2d");
+
+          new Chart(ctx, {
+            type: 'bar',
+            data: {
+              labels: data.labels,
+              datasets: [{
+                label: 'Energy Consumption',
+                backgroundColor: 'blue',
+                data: data.data
+              }]          
+            },
+            options: {
+              responsive: true,
+              legend: {
+                position: 'top',
+              },
+              title: {
+                display: true,
+                text: 'Energy consumption Bar Chart'
+              }
+            }
+          });
+
+        }
+      });
+
+    });
+
+  </script>
+
 {% endblock %}

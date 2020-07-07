@@ -2,7 +2,23 @@ import csv, io
 from django.shortcuts import render
 from django.contrib import messages
 from django.http import Http404
+from django.http import JsonResponse
 from .models import Building, Meter, Fuel, Readings
+
+
+def meter_chart(request, meter_id):
+    labels = []
+    data = []
+    meter = Meter.objects.get(pk=meter_id)
+    readingset = meter.readings_set.all()
+    for reading in readingset:
+        labels.append(reading.reading_data_time)
+        data.append(reading.consumption)
+    
+    return JsonResponse(data={
+        'labels': labels,
+        'data': data,
+    })
 
 def index(request):
   buildings = Building.objects.order_by()
