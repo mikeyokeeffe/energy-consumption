@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1 class="text-center mb-3">Buildings</h1>
+  {% if buildings %}
+  {% for building in buildings %}
+  <div class="card mb-3">
+    <div class="card-body">
+      <p class="lead">{{ building.name }}</p>
+      <a href="{% url 'buildings:meter_detail' building.id %}" class="btn btn-primary btn-sm">Meters</a>
+    </div>
+  </div>
+  {% endfor %}
+  {% else %}
+    <p>No Data available</p>
+  {% endif %}
+{% endblock %}

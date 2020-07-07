@@ -1,5 +1,8 @@
 from django.db import models
 import re
+from django.utils.safestring import mark_safe
+from django.urls import reverse
+#from .views import meter_detail
 
 class Building(models.Model):
   id = models.IntegerField(primary_key=True)
@@ -19,9 +22,16 @@ class Meter(models.Model):
   id = models.IntegerField(primary_key=True)
   building = models.ForeignKey(Building, on_delete=models.CASCADE)
   fuel = models.ForeignKey(Fuel, on_delete=models.CASCADE) 
-    
+  def id(self):
+    return mark_safe('<a class="btn-btn-dark" href="{% url "meter_detail" self.id %}">')
+  # meter_link.allow_tags = True
+  # meter_link.short_description = "Meter" 
+  # show_meter_link = True
+
+
+
   def __str__(self):
-    return self.id
+    return str(self.id)
 
 class Readings(models.Model):
   class Meta:
