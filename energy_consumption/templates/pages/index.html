@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="card text-center">
+  <div class="card-body">
+    <h1>Welcome to Meter Readings</h1>
+    <p>Click below to view the Buildings</p>
+    <a class="btn btn-dark" href="{% url 'buildings:index' %}">
+      View Buildings
+    </a>
+  </div>
+</div>
+{% endblock %}
