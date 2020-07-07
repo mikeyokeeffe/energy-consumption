@@ -12,7 +12,8 @@ def meter_chart(request, meter_id):
     meter = Meter.objects.get(pk=meter_id)
     readingset = meter.readings_set.all()
     for reading in readingset:
-        labels.append(reading.reading_data_time)
+        date = reading.reading_data_time.strftime("%m-%d")
+        labels.append(date)
         data.append(reading.consumption)
     
     return JsonResponse(data={

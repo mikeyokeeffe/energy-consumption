@@ -3,6 +3,7 @@
 {% block content %}
 
   <div id="container">
+    <label>{{ meter.fuel }} Consumption</label>
     <canvas id="meter_chart" data-url="{% url 'buildings:meter_chart' meter.id %}"></canvas>
   </div>
 
@@ -24,7 +25,7 @@
             data: {
               labels: data.labels,
               datasets: [{
-                label: 'Energy Consumption',
+                label: '{{ meter.fuel }} Consumption / {{ meter.fuel.unit }}',
                 backgroundColor: 'blue',
                 data: data.data
               }]          
@@ -36,7 +37,15 @@
               },
               title: {
                 display: true,
-                text: 'Energy consumption Bar Chart'
+                text: 'Meter Readings'
+              },
+              scales: {
+                yAxes: [{
+                  scaleLabel: {
+                    display: true,
+                    labelString: 'Consumption / {{ meter.fuel.unit }}'
+                  }
+                }]
               }
             }
           });

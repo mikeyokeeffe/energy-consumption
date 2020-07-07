@@ -13,8 +13,9 @@
   {% csrf_token %}
   {% for meter in building.meter_set.all %}
   <div class="form-check flex-dir-row">
-    <p class="lead">{{ meter.id }}</p>
-    <a href="{% url 'buildings:meter_readings' meter.id %}" class="btn btn-primary btn-sm">{{ meter.id }}</a>
+    <p class="lead"> Meter No: {{ meter.id }}</p>
+    <p class="lead">{{ meter.fuel }}</p>
+    <a href="{% url 'buildings:meter_readings' meter.id %}" class="btn btn-primary btn-sm">View Data</a>
   </div>
   {% endfor %}
 </form>

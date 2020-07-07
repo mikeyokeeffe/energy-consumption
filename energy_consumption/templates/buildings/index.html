@@ -6,7 +6,7 @@
   {% for building in buildings %}
   <div class="card mb-3">
     <div class="card-body">
-      <p class="lead">{{ building.name }}</p>
+      <p class="lead">{{ building }}</p>
       <a href="{% url 'buildings:meter_detail' building.id %}" class="btn btn-primary btn-sm">Meters</a>
     </div>
   </div>

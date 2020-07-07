@@ -18,6 +18,7 @@ from django.urls import path
 from django.contrib import admin
 from buildings.views import building_upload, meter_upload, reading_upload, meter_detail
 urlpatterns = [
+    url(r'^', include('pages.urls')),
     url(r'^admin/', admin.site.urls),
     url(r'^buildings/', include('buildings.urls')),
     url(r'^upload-building/', building_upload, name="building_upload"),

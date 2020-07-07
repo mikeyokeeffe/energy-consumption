@@ -9,7 +9,12 @@ class Building(models.Model):
   name = models.CharField(max_length=100)
 
   def __str__(self):
-    return self.name
+    n = self.name.find(" (")
+    if n > 0:
+      name = self.name[:n]
+    else:
+      name = self.name
+    return name
 
 class Fuel(models.Model):
   fuel = models.CharField(max_length=30, primary_key=True)
@@ -22,13 +27,6 @@ class Meter(models.Model):
   id = models.IntegerField(primary_key=True)
   building = models.ForeignKey(Building, on_delete=models.CASCADE)
   fuel = models.ForeignKey(Fuel, on_delete=models.CASCADE) 
-  def id(self):
-    return mark_safe('<a class="btn-btn-dark" href="{% url "meter_detail" self.id %}">')
-  # meter_link.allow_tags = True
-  # meter_link.short_description = "Meter" 
-  # show_meter_link = True
-
-
 
   def __str__(self):
     return str(self.id)
